@@ -95,6 +95,37 @@
                                     </p>
                                 </td>
                                 <td class="px-6 py-4">
+                                    <div class="flex flex-wrap gap-3 items-center">
+                                        <!-- Action buttons -->
+                                        @if ($data->is_admin)
+                                        <form action="{{ route('user.removeadmin', $data) }}" method="POST">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button type="submit"
+                                                class="text-red-600 dark:text-red-400 whitespace-nowrap">
+                                                Remove Admin
+                                            </button>
+                                        </form>
+                                        @else
+                                        <form action="{{ route('user.makeadmin', $data) }}" method="Post">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button type="submit"
+                                                class="text-red-600 dark:text-red-400 whitespace-nowrap">
+                                                Make Admin
+                                            </button>
+                                        </form>
+                                        @endif
+                                        <form action="{{ route('user.destroy', $data) }}" method="Post">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit"
+                                                class="text-red-600 dark:text-red-400 whitespace-nowrap hover:underline ms-2">
+                                                Delete
+                                            </button>
+
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                             @empty
