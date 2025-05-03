@@ -102,7 +102,7 @@
                                             @csrf
                                             @method('PATCH')
                                             <button type="submit"
-                                                class="text-red-600 dark:text-red-400 whitespace-nowrap">
+                                                class="text-blue-600 dark:text-blue-400 whitespace-nowrap">
                                                 Remove Admin
                                             </button>
                                         </form>
