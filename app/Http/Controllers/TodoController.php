@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Todo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,6 +25,7 @@ class TodoController extends Controller
     {
         $todos = Todo::where('user_id', Auth::id())
             // ->orderBy('is_done', 'asc')
+            ->with('category')
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -36,13 +38,15 @@ class TodoController extends Controller
 
     public function create()
     {
-        return view('todo.create');
+        $categories = Category::all();
+        return view('todo.create', compact('categories'));
     }
 
     public function edit(Todo $todo)
     {
         if (auth::user()->id == $todo->user_id) {
-            return view('todo.edit', compact('todo'));
+            $categories = Category::all();
+            return view('todo.edit', compact('todo', 'categories'));
         } else {
 
             return redirect()
@@ -55,10 +59,12 @@ class TodoController extends Controller
     {
         $request->validate([
             'title' => 'required|max:255',
+            'category_id' => 'required|exists:categories,id',
         ]);
 
         $todo->update([
             'title' => ucfirst($request->title),
+            'category_id' => $request->category_id
         ]);
         return redirect()->route('todo.index')->with('success', 'Todo updated successfully!');
     }
@@ -87,11 +93,13 @@ class TodoController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
+            'category_id' => 'required|exists:categories,id',
         ]);
 
         $todo = Todo::create([
             'title' => ucfirst($request->title),
             'user_id' => Auth::id(),
+            'category_id' => $request->category_id,
         ]);
         return redirect()->route('todo.index')->with('success', 'Todo Create Successfully');
     }

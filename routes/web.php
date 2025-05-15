@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TodoController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use App\Models\Todo;
 use App\Models\User;
@@ -44,9 +46,15 @@ Route::middleware('auth')->group(function () {
 
     // Resource
     Route::resource('todo', TodoController::class)->except(['show']);
+
+    // Category
+    Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
+    Route::resource('category', CategoryController::class)->except(['show']);
+    Route::get('/category/create', [CategoryController::class, 'create'])->name('category.create');
+    Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
 });
 
-Route::middleware(['auth', 'admin'])->group(function() {
+Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('user', UserController::class)->except(['show']);
     Route::patch('/user/{user}/makeadmin', [UserController::class, 'makeadmin'])->name('user.makeadmin');
     Route::patch('/user/{user}/removeadmin', [UserController::class, 'removeadmin'])->name('user.removeadmin');

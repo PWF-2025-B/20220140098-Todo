@@ -33,6 +33,7 @@
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">Title</th>
+                                <th scope="col" class="px-6 py-3">Category</th>
                                 <th scope="col" class="px-6 py-3">Status</th>
                                 <th scope="col" class="px-6 py-3">Action</th>
                             </tr>
@@ -45,6 +46,13 @@
                                         {{ $todo->title }}
                                     </a>
                                 </td>
+
+                                <!-- ✅ Category -->
+                                <td class="px-6 py-4">
+                                    {{ $todo->category->title ?? 'No Category' }}
+                                </td>
+
+                                <!-- ✅ Status -->
                                 <td class="px-6 py-4">
                                     @if (!$todo->is_done)
                                     <span class="inline-flex items-center bg-red-100 text-red-800 text-sm font-medium px-2.5 py-0.5 rounded-sm dark:bg-red-900 dark:text-red-300">
@@ -56,6 +64,8 @@
                                     </span>
                                     @endif
                                 </td>
+
+                                <!-- ✅ Action -->
                                 <td class="px-6 py-4 space-x-2">
                                     <div class="flex items-center gap-2">
                                         @if (!$todo->is_done)
@@ -63,9 +73,9 @@
                                             @csrf
                                             @method('PATCH')
                                             <button type="submit" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 
-                                                focus:outline-none focus:ring-green-300 font-medium rounded-lg px-2.5 
-                                                py-1.5 text-center dark:bg-green-600 dark:hover:bg-green-700 
-                                                dark:focus:ring-green-800">
+                                            focus:outline-none focus:ring-green-300 font-medium rounded-lg px-2.5 
+                                            py-1.5 text-center dark:bg-green-600 dark:hover:bg-green-700 
+                                            dark:focus:ring-green-800">
                                                 Done
                                             </button>
                                         </form>
@@ -74,18 +84,18 @@
                                             @csrf
                                             @method('PATCH')
                                             <button type="submit" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 
-                                                focus:outline-none focus:ring-red-300 font-medium rounded-lg px-2.5 
-                                                py-1.5 text-center dark:bg-red-600 dark:hover:bg-red-700 
-                                                dark:focus:ring-red-800">
+                                            focus:outline-none focus:ring-red-300 font-medium rounded-lg px-2.5 
+                                            py-1.5 text-center dark:bg-red-600 dark:hover:bg-red-700 
+                                            dark:focus:ring-red-800">
                                                 Uncomplete
                                             </button>
                                         </form>
                                         @endif
+
                                         <form action="{{ route('todo.destroy', $todo) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="text-red-600 dark:text-red-400 whitespace-nowrap hover:underline ms-2">
-
                                                 Delete
                                             </button>
                                         </form>
@@ -94,7 +104,7 @@
                             </tr>
                             @empty
                             <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200">
-                                <td colspan="3" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
+                                <td colspan="4" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
                                     No data available
                                 </td>
                             </tr>

@@ -18,9 +18,22 @@
                             <x-input-label for="title" :value="__('Title')" />
 
                             <x-text-input id="title" name="title" type="text" class="mt-1 block w-full"
-                                :value="old('name', $todo->title)" required autofocus autocomplete="title" />
+                                :value="old('title', $todo->title)" required autofocus autocomplete="title" />
 
                             <x-input-error class="mt-2" :messages="$errors->get('title')" />
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="category_id" class="block text-gray-700 dark:text-gray-200">Category</label>
+                            <select name="category_id" id="category_id"
+                                class="w-full border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:text-white">
+                                <option value="">No Category</option>
+                                @foreach($categories as $category)
+                                <option value="{{ $category->id }}" {{ $todo->category_id == $category->id ? 'selected' : '' }}>
+                                    {{ $category->title }}
+                                </option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="flex items-center gap-4">
