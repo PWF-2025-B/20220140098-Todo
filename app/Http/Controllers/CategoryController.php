@@ -17,6 +17,9 @@ class CategoryController extends Controller
         //     ->orderBy('created_at', 'desc')
         //     ->get();
 
+        $categories = Category::with(['todos'])->withCount('todos')
+            ->where('user_id', Auth::id())
+            ->get();
         return view('category.index', compact('categories'));
     }
 
