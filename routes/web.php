@@ -4,10 +4,13 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TodoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
-use App\Models\Category;
 use Illuminate\Support\Facades\Route;
-use App\Models\Todo;
-use App\Models\User;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+
+Route::get('/verify-email/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+    return redirect('/dashboard');
+})->middleware(['auth', 'signed'])->name('verification.verify');
 
 Route::get('/', function () {
     return view('welcome');
